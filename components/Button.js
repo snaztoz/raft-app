@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 const buttonStyles = {
   primary: `
     inline-block border-2 border-green-500 bg-green-500 px-3
@@ -18,9 +20,9 @@ export const LinkButton = props => {
   const style = buttonStyles[props.buttonType]
 
   return (
-    <a className={style} href={props.link}>
-      {props.text}
-    </a>
+    <Link href={props.link}>
+      <a className={style}>{props.text}</a>
+    </Link>
   )
 }
 

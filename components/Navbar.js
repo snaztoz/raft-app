@@ -12,7 +12,7 @@ export default function Navbar() {
 
       <div className="col-start-8 col-span-3 lg:col-span-2 lg:col-start-6
           py-1 flex justify-center">
-        <LinkButton link="#" buttonType="secondary" text="Login" />
+        <LinkButton link="/user/login" buttonType="secondary" text="Login" />
       </div>
     </nav>
   )

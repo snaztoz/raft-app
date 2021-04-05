@@ -26,7 +26,7 @@ export default function Home() {
           <div>
             <LinkButton link="#" buttonType="primary" text="Sign up" />
             <span className="inline-block mx-2"></span>
-            <LinkButton link="#" buttonType="secondary" text="Login" />
+            <LinkButton link="/user/login" buttonType="secondary" text="Login" />
           </div>
         </div>
 
