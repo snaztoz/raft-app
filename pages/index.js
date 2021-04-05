@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image';
 
 import Container from 'components/Container'
+import Navbar from 'components/Navbar'
 import Footer from 'components/Footer'
 import { LinkButton } from 'components/Button'
 
@@ -12,6 +13,8 @@ export default function Home() {
         <title>Raft</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       </Head>
+
+      <Navbar />
 
       <main className="p-3 text-center md:text-left md:flex md:justify-center">
         <div className="md:flex flex-col justify-center md:mr-20">
