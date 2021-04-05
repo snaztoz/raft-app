@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import url from 'values/urls'
 import { LinkButton } from 'components/Button'
 
 export default function Navbar() {
@@ -7,7 +8,7 @@ export default function Navbar() {
     <nav className="p-2 grid grid-cols-10 lg:grid-cols-8 gap-2 bg-white border-b">
       <p className="col-span-3 lg:col-start-2 lg:col-span-2 flex
           justify-center items-center">
-        <Link href="/">
+        <Link href={url.home}>
           <a className="inline-block text-2xl">
             <strong>Raft</strong>
           </a>

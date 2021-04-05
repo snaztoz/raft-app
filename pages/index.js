@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Container from 'components/Container'
 import Navbar from 'components/Navbar'
 import Footer from 'components/Footer'
+import url from 'values/urls'
 import { LinkButton } from 'components/Button'
 
 export default function Home() {
@@ -24,9 +25,9 @@ export default function Home() {
           <h2 className="text-xl mb-6">Your new way of interacting with others</h2>
 
           <div>
-            <LinkButton link="#" buttonType="primary" text="Sign up" />
+            <LinkButton link={url.temp} buttonType="primary" text="Sign up" />
             <span className="inline-block mx-2"></span>
-            <LinkButton link="/user/login" buttonType="secondary" text="Login" />
+            <LinkButton link={url.userLogin} buttonType="secondary" text="Login" />
           </div>
         </div>
 
