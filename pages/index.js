@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import Container from 'components/Container'
 import Footer from 'components/Footer'
+import { LinkButton } from 'components/Button'
 
 export default function Home() {
   return (
@@ -20,17 +21,9 @@ export default function Home() {
           <h2 className="text-xl mb-6">Your new way of interacting with others</h2>
 
           <div>
-            <a href="#" className="inline-block border-2 border-green-500 bg-green-500 px-3
-                py-2 text-white rounded-md font-semibold hover:bg-green-600
-                hover:border-green-600">
-              Sign up
-            </a>
+            <LinkButton link="#" buttonType="primary" text="Sign up" />
             <span className="inline-block mx-2"></span>
-            <a href="#" className="inline-block border-2 border-green-500 px-3 py-2
-                rounded-md text-green-500 font-semibold hover:border-green-600
-                hover:text-green-600">
-              Login
-            </a>
+            <LinkButton link="#" buttonType="secondary" text="Login" />
           </div>
         </div>
 
