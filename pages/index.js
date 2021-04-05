@@ -13,7 +13,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       </Head>
 
-      <main className="p-3 text-center md:flex md:justify-center">
+      <main className="p-3 text-center md:text-left md:flex md:justify-center">
         <div className="md:flex flex-col justify-center md:mr-20">
           <h1 className="text-3xl mb-3">
             <strong>Introducing <span className="text-green-500">Raft</span></strong>
