@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Container from 'components/Container'
 import Navbar from 'components/Navbar'
 import Footer from 'components/Footer'
+import { BreakSpace } from 'components/Space'
 import { PasswordInput, SubmitButton, TextInput } from 'components/Forms'
 
 export default function Login() {
@@ -17,15 +18,19 @@ export default function Login() {
 
       <main className="flex justify-center">
         <div className="w-80 text-center py-3">
-          <h1 className="text-xl mb-5">Login</h1>
+          <h1 className="text-xl">Login</h1>
+
+          <BreakSpace size="5" />
+
           <form action="" method="POST">
             <TextInput name="identifier" placeholder="Username or Email" />
-            <div className="mb-3"></div>
+            <BreakSpace size="3" />
             <PasswordInput name="password" placeholder="Password" />
-            <div className="mb-8"></div>
+            <BreakSpace size="8" />
             <SubmitButton value="Login" />
           </form>
-          <div className="mb-5"></div>
+
+          <BreakSpace size="5" />
 
           <p>
             <a href="#" className="text-blue-500 hover:text-blue-600 hover:underline
@@ -33,7 +38,7 @@ export default function Login() {
               Forgot your password?
             </a>
           </p>
-          <div className="mb-2"></div>
+          <BreakSpace size="2" />
           <p>
             Doesn't have an account?&nbsp;
             <a href="#" className="text-blue-500 hover:text-purple-600 hover:underline
