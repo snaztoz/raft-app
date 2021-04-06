@@ -6,7 +6,7 @@ import Footer from 'components/Footer'
 import { BreakSpace } from 'components/Space'
 import { PasswordInput, SubmitButton, TextInput } from 'components/Forms'
 import { forms } from 'values/forms'
-import { signUserIn } from 'handlers/submit-login'
+import { loginSubmitHandler } from 'handlers/submit-login'
 
 export default function Login() {
   return (
@@ -30,7 +30,7 @@ export default function Login() {
             <PasswordInput name={forms.login.password} placeholder="Password" />
             <BreakSpace size="8" />
             <SubmitButton value="Login" handleClick={() => {
-                  signUserIn(
+                  loginSubmitHandler(
                     document.querySelector(`input[name="${forms.login.identifier}"]`).value,
                     document.querySelector(`input[name="${forms.login.password}"]`).value
                   )

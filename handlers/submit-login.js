@@ -1,4 +1,4 @@
-export const signUserIn = (identifier, password) => {
+export const loginSubmitHandler = (identifier, password) => {
   if (!identifier || !password) {
     return;
   }
