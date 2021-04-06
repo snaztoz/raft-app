@@ -26,7 +26,10 @@ export const SubmitButton = props => {
   return (
     <button type="submit" value={value} className={`${style.no_outline} w-full p-3
         rounded-full bg-green-500 hover:bg-green-600 focus:bg-green-600 font-semibold
-        text-white`}>
+        text-white`} onClick={e => {
+          e.preventDefault()
+          props.handleClick()
+        }}>
       {value}
     </button>
   )

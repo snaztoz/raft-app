@@ -5,6 +5,7 @@ import Navbar from 'components/Navbar'
 import Footer from 'components/Footer'
 import { BreakSpace } from 'components/Space'
 import { PasswordInput, SubmitButton, TextInput } from 'components/Forms'
+import { signUserIn } from 'handlers/submit-login'
 
 export default function Login() {
   return (
@@ -27,7 +28,12 @@ export default function Login() {
             <BreakSpace size="3" />
             <PasswordInput name="password" placeholder="Password" />
             <BreakSpace size="8" />
-            <SubmitButton value="Login" />
+            <SubmitButton value="Login" handleClick={() => {
+                  signUserIn(
+                    document.querySelector('input[name="identifier"]').value,
+                    document.querySelector('input[name="password"]').value
+                  )
+                }}/>
           </form>
 
           <BreakSpace size="5" />
