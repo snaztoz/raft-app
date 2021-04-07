@@ -1,9 +1,12 @@
 import Link from 'next/link'
 
 import url from 'values/urls'
-import { LinkButton } from 'components/Button'
+import { ActionButton, LinkButton } from 'components/Button'
+import { useAuth } from 'lib/use-auth'
 
 export default function Navbar() {
+  const auth = useAuth()
+
   return (
     <nav className="p-2 grid grid-cols-10 lg:grid-cols-8 gap-2 bg-white border-b">
       <p className="col-span-3 lg:col-start-2 lg:col-span-2 flex
@@ -17,7 +20,11 @@ export default function Navbar() {
 
       <div className="col-start-8 col-span-3 lg:col-span-2 lg:col-start-6
           py-1 flex justify-center">
-        <LinkButton link="/user/login" buttonType="secondary" text="Login" />
+        {auth.user? (
+          <ActionButton buttonType="secondary" text="Sign out" handleClick={() => auth.signout()}/>
+        ): (
+          <LinkButton link="/user/login" buttonType="secondary" text="Login" />
+        )}
       </div>
     </nav>
   )
