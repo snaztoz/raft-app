@@ -1,14 +1,24 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 import Container from 'components/Container'
 import Navbar from 'components/Navbar'
 import Footer from 'components/Footer'
+import url from 'values/urls'
 import { BreakSpace } from 'components/Space'
 import { PasswordInput, SubmitButton, TextInput } from 'components/Forms'
 import { forms } from 'values/forms'
 import { loginSubmitHandler } from 'handlers/submit-login'
+import { useAuth } from 'lib/use-auth'
 
 export default function Login() {
+  const auth = useAuth()
+  const router = useRouter()
+
+  if (auth.user) {
+    router.push(url.home)
+  }
+
   return (
     <Container>
       <Head>
@@ -32,7 +42,8 @@ export default function Login() {
             <SubmitButton value="Login" handleClick={() => {
                   loginSubmitHandler(
                     document.querySelector(`input[name="${forms.login.identifier}"]`).value,
-                    document.querySelector(`input[name="${forms.login.password}"]`).value
+                    document.querySelector(`input[name="${forms.login.password}"]`).value,
+                    auth.signin
                   )
                 }}/>
           </form>

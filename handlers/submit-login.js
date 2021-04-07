@@ -1,6 +1,6 @@
-export const loginSubmitHandler = (identifier, password) => {
+export const loginSubmitHandler = (identifier, password, doLogin) => {
   if (!identifier || !password) {
     return;
   }
-  console.log(identifier, password)
+  doLogin(identifier, password)
 }
