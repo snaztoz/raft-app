@@ -14,6 +14,18 @@ const buttonStyles = {
   `
 }
 
+export const ActionButton = props => {
+  assertValidButtonType(props.buttonType)
+
+  const style = buttonStyles[props.buttonType]
+
+  return (
+    <button className={style} onClick={props.handleClick}>
+      {props.text}
+    </button>
+  )
+}
+
 export const LinkButton = props => {
   assertValidButtonType(props.buttonType)
 
