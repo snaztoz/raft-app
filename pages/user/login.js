@@ -11,6 +11,42 @@ import { PasswordInput, SubmitButton, TextInput } from 'components/Forms'
 import { forms } from 'values/forms'
 import { useAuth } from 'lib/use-auth'
 
+/* Error yang mungkin terjadi */
+const errorCodes = {
+  'auth/invalid-email': {
+    el: 'identifier',
+    msg: 'invalid email'
+  },
+
+  'auth/user-not-found': {
+    el: 'identifier',
+    msg: 'user does not exist'
+  },
+
+  'auth/wrong-password': {
+    el: 'password',
+    msg: 'incorrect password'
+  }
+}
+
+// Object untuk state error dari page login.
+//
+// Dibuat seperti ini agar bisa menerapkan custom getter, supaya
+// pesan error yang ada hanya dapat diambil sekali setiap kali
+// terjadi error (flash message)
+const formErrors = {
+  el: null,
+  msg: null,
+
+  take: function() {
+    const el = this.el
+    const msg = this.msg
+    this.el = null
+    this.msg = null
+    return { el, msg }
+  }
+}
+
 export default function Login() {
   const auth = useAuth()
   const router = useRouter()
@@ -24,24 +60,13 @@ export default function Login() {
     const identifier = document.querySelector(`input[name="${forms.login.identifier}"]`).value
     const password = document.querySelector(`input[name="${forms.login.password}"]`).value
 
-    if (!identifier) {
-      setError(error => ({
-          ...error,
-          el: 'identifier',
-          msg: 'username or email required'
-      }))
-      return
-    }
-    if (!password) {
+    auth.signin(identifier, password, errorCode => {
       setError(error => ({
         ...error,
-        el: 'password',
-        msg: 'password required'
-    }))
-      return
-    }
-
-    auth.signin(identifier, password)
+        el: errorCodes[errorCode].el,
+        msg: errorCodes[errorCode].msg
+      }))
+    })
   }
 
   const formError = error.take()
@@ -94,22 +119,4 @@ export default function Login() {
       <Footer />
     </Container>
   )
-}
-
-// Object untuk state error dari page login.
-//
-// Dibuat seperti ini agar bisa menerapkan custom getter, supaya
-// pesan error yang ada hanya dapat diambil sekali setiap kali
-// terjadi error (flash message)
-const formErrors = {
-  el: null,
-  msg: null,
-
-  take: function() {
-    const el = this.el
-    const msg = this.msg
-    this.el = null
-    this.msg = null
-    return { el, msg }
-  }
 }
