@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
@@ -8,16 +9,42 @@ import url from 'values/urls'
 import { BreakSpace } from 'components/Space'
 import { PasswordInput, SubmitButton, TextInput } from 'components/Forms'
 import { forms } from 'values/forms'
-import { loginSubmitHandler } from 'handlers/submit-login'
 import { useAuth } from 'lib/use-auth'
 
 export default function Login() {
   const auth = useAuth()
   const router = useRouter()
+  const [error, setError] = useState(formErrors)
 
   if (auth.user) {
     router.push(url.home)
   }
+
+  const doLogin = () => {
+    const identifier = document.querySelector(`input[name="${forms.login.identifier}"]`).value
+    const password = document.querySelector(`input[name="${forms.login.password}"]`).value
+
+    if (!identifier) {
+      setError(error => ({
+          ...error,
+          el: 'identifier',
+          msg: 'username or email required'
+      }))
+      return
+    }
+    if (!password) {
+      setError(error => ({
+        ...error,
+        el: 'password',
+        msg: 'password required'
+    }))
+      return
+    }
+
+    auth.signin(identifier, password)
+  }
+
+  const formError = error.take()
 
   return (
     <Container>
@@ -32,20 +59,17 @@ export default function Login() {
         <div className="w-80 text-center py-3">
           <h1 className="text-xl">Login</h1>
 
-          <BreakSpace size="5" />
+          <BreakSpace size="8" />
 
           <form action="" method="POST">
-            <TextInput name={forms.login.identifier} placeholder="Username or Email" />
-            <BreakSpace size="3" />
-            <PasswordInput name={forms.login.password} placeholder="Password" />
-            <BreakSpace size="8" />
-            <SubmitButton value="Login" handleClick={() => {
-                  loginSubmitHandler(
-                    document.querySelector(`input[name="${forms.login.identifier}"]`).value,
-                    document.querySelector(`input[name="${forms.login.password}"]`).value,
-                    auth.signin
-                  )
-                }}/>
+            <TextInput name={forms.login.identifier} placeholder="Username or Email"
+                isErrorExist={formError.el == 'identifier'} errorMsg={formError.msg}/>
+
+            <PasswordInput name={forms.login.password} placeholder="Password"
+                isErrorExist={formError.el == 'password'} errorMsg={formError.msg} />
+            <BreakSpace size="5" />
+
+            <SubmitButton value="Login" handleClick={doLogin}/>
           </form>
 
           <BreakSpace size="5" />
@@ -70,4 +94,22 @@ export default function Login() {
       <Footer />
     </Container>
   )
+}
+
+// Object untuk state error dari page login.
+//
+// Dibuat seperti ini agar bisa menerapkan custom getter, supaya
+// pesan error yang ada hanya dapat diambil sekali setiap kali
+// terjadi error (flash message)
+const formErrors = {
+  el: null,
+  msg: null,
+
+  take: function() {
+    const el = this.el
+    const msg = this.msg
+    this.el = null
+    this.msg = null
+    return { el, msg }
+  }
 }
