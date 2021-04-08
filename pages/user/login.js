@@ -56,11 +56,11 @@ export default function Login() {
     router.push(url.home)
   }
 
-  const doLogin = () => {
+  const doLogin = async () => {
     const identifier = document.querySelector(`input[name="${forms.login.identifier}"]`).value
     const password = document.querySelector(`input[name="${forms.login.password}"]`).value
 
-    auth.signin(identifier, password, errorCode => {
+    await auth.signin(identifier, password, errorCode => {
       setError(error => ({
         ...error,
         el: errorCodes[errorCode].el,

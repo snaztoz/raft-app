@@ -1,3 +1,5 @@
+import React, { useState } from 'react'
+
 import style from 'styles/Forms.module.css'
 
 const Input = props => {
@@ -35,16 +37,26 @@ export const PasswordInput = props => {
 }
 
 export const SubmitButton = props => {
+  const [clicked, setClicked] = useState(false)
   const value = props.value
+  const styles = `
+    ${style.no_outline}
+    ${clicked? 'bg-gray-400': 'bg-green-500 hover:bg-green-600 focus:bg-green-600'}
+    w-full p-3 rounded-full font-semibold text-white relative
+  `
 
   return (
-    <button type="submit" value={value} className={`${style.no_outline} w-full p-3
-        rounded-full bg-green-500 hover:bg-green-600 focus:bg-green-600 font-semibold
-        text-white`} onClick={e => {
+    <button type="submit" value={value} className={styles} disabled={clicked}
+        onClick={async e => {
           e.preventDefault()
-          props.handleClick()
+          setClicked(true)
+          await props.handleClick()
+          setClicked(false)
         }}>
       {value}
+      {clicked &&
+        <div className={`absolute ${style.submit_button_spinner} right-3 top-3`}></div>
+      }
     </button>
   )
 }
