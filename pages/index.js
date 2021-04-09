@@ -15,7 +15,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       </Head>
 
-      <Navbar />
+      <Navbar>
+        <LinkButton link="/user/login" buttonType="primary" text="Get Started" />
+      </Navbar>
 
       <main className="p-3 text-center md:text-left md:flex md:justify-center">
         <div className="md:flex flex-col justify-center md:mr-20">
@@ -25,9 +27,7 @@ export default function Home() {
           <h2 className="text-xl mb-6">Your new way of interacting with others</h2>
 
           <div>
-            <LinkButton link={url.temp} buttonType="primary" text="Sign up" />
-            <span className="inline-block mx-2"></span>
-            <LinkButton link={url.userLogin} buttonType="secondary" text="Login" />
+            <LinkButton link={url.userLogin} buttonType="primary" text="Get Started" />
           </div>
         </div>
 
