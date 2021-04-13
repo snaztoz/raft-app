@@ -6,6 +6,7 @@ import { withIronSession } from 'next-iron-session'
 import Container from 'components/Container'
 import Navbar from 'components/Navbar'
 import Footer from 'components/Footer'
+import session from 'values/session'
 import url from 'values/urls'
 import { BreakSpace } from 'components/Space'
 import { PasswordInput, SubmitButton, TextInput } from 'components/Forms'
@@ -25,14 +26,8 @@ export const getServerSideProps = withIronSession(
     }
 
     return { props: {} }
-  }, {
-    password: process.env.SECRET_KEY,
-    httpOnly: true,
-    cookieName: 'RAFTCOOKIE',
-    cookieOptions: {
-      secure: process.env.SECRET_KEY == 'production'
-    }
-  }
+  },
+  session
 )
 
 /* Error yang mungkin terjadi */

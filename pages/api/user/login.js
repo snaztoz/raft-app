@@ -1,5 +1,6 @@
 import { withIronSession } from 'next-iron-session'
 
+import session from 'values/session'
 import { login } from 'internal/auth'
 
 async function handler(req, res) {
@@ -21,11 +22,4 @@ async function handler(req, res) {
   return res.status(201).send('')
 }
 
-export default withIronSession(handler, {
-  password: process.env.SECRET_KEY,
-  httpOnly: true,
-  cookieName: 'RAFTCOOKIE',
-  cookieOptions: {
-    secure: process.env.SECRET_KEY == 'production'
-  }
-})
+export default withIronSession(handler, session)
