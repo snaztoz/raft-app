@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { withIronSession } from 'next-iron-session'
 
 import Container from 'components/Container'
 import Navbar from 'components/Navbar'
@@ -9,6 +10,30 @@ import url from 'values/urls'
 import { BreakSpace } from 'components/Space'
 import { PasswordInput, SubmitButton, TextInput } from 'components/Forms'
 import { forms } from 'values/forms'
+
+export const getServerSideProps = withIronSession(
+  async function ({ req }) {
+    const user = req.session.get('user')
+
+    if (user) {
+      return {
+        redirect: {
+          destination: url.home,
+          permanent: false
+        }
+      }
+    }
+
+    return { props: {} }
+  }, {
+    password: process.env.SECRET_KEY,
+    httpOnly: true,
+    cookieName: 'RAFTCOOKIE',
+    cookieOptions: {
+      secure: process.env.SECRET_KEY == 'production'
+    }
+  }
+)
 
 /* Error yang mungkin terjadi */
 const errorCodes = {
