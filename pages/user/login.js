@@ -9,7 +9,6 @@ import url from 'values/urls'
 import { BreakSpace } from 'components/Space'
 import { PasswordInput, SubmitButton, TextInput } from 'components/Forms'
 import { forms } from 'values/forms'
-import { useAuth } from 'lib/use-auth'
 
 /* Error yang mungkin terjadi */
 const errorCodes = {
@@ -41,35 +40,51 @@ const formErrors = {
   take: function() {
     const el = this.el
     const msg = this.msg
+    this.clear()
+    return { el, msg }
+  },
+
+  clear: function() {
     this.el = null
     this.msg = null
-    return { el, msg }
   }
 }
 
 export default function Login() {
-  const auth = useAuth()
-  const router = useRouter()
-  const [error, setError] = useState(formErrors)
-
-  if (auth.user) {
-    router.push(url.home)
-  }
+  const [errorState, setErrorState] = useState(formErrors)
 
   const doLogin = async () => {
+    // reset error state ketika tombol login ditekan
+    setErrorState(formErrors)
+
     const identifier = document.querySelector(`input[name="${forms.login.identifier}"]`).value
     const password = document.querySelector(`input[name="${forms.login.password}"]`).value
 
-    await auth.signin(identifier, password, errorCode => {
-      setError(error => ({
-        ...error,
-        el: errorCodes[errorCode].el,
-        msg: errorCodes[errorCode].msg
-      }))
+    const res = await fetch('/api/user/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({ identifier, password })
     })
+
+    if (!res.ok) {
+      const { err } = await res.json()
+
+      setErrorState(prevErrorState => ({
+        ...prevErrorState,
+        el: errorCodes[err].el,
+        msg: errorCodes[err].msg,
+      }))
+
+      return
+    }
+
+    console.log('SUCCEED')
   }
 
-  const formError = error.take()
+  const inputError = errorState.take()
 
   return (
     <Container>
@@ -88,13 +103,13 @@ export default function Login() {
 
           <form action="" method="POST">
             <TextInput name={forms.login.identifier} placeholder="Username or Email"
-                isErrorExist={formError.el == 'identifier'} errorMsg={formError.msg}/>
+                isErrorExist={inputError.el == 'identifier'} errorMsg={inputError.msg} />
 
             <PasswordInput name={forms.login.password} placeholder="Password"
-                isErrorExist={formError.el == 'password'} errorMsg={formError.msg} />
+                isErrorExist={inputError.el == 'password'} errorMsg={inputError.msg} />
             <BreakSpace size="5" />
 
-            <SubmitButton value="Login" handleClick={doLogin}/>
+            <SubmitButton value="Login" handleClick={doLogin} />
           </form>
 
           <BreakSpace size="5" />
