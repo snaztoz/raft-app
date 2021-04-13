@@ -34,10 +34,18 @@ export default function Chat({ user }) {
       </Head>
 
       <div className="h-screen grid grid-cols-12">
-        <aside className="col-span-4 h-full">
+        <aside className="relative col-span-4 h-full">
           <ProfileHeader bgColor="bg-green-300" textColor="text-white" name="Foo"
               image="/me-square.jpg" otherActions="act" />
+
+          <div className="absolute bottom-3 left-3 w-14 h-14 bg-red-200 hover:bg-red-300
+              rounded-full flex justify-center items-center shadow-lg">
+            <button className="w-full h-full font-bold text-white text-4xl pb-2
+                focus:outline-none"
+                onClick={() => console.log('CLICKED')}>+</button>
+          </div>
         </aside>
+
         <main className="col-span-8 h-full bg-red-100 flex flex-col justify-between">
           <ProfileHeader bgColor="bg-white" textColor="text-dark" name="Bar"
               image="/me-square.jpg" otherActions="act" />
