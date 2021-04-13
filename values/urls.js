@@ -3,6 +3,7 @@ const url = {
   temp: '#',
 
   home: '/',
+  chat: '/chat',
   userLogin: '/user/login',
 }
 

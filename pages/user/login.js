@@ -19,7 +19,7 @@ export const getServerSideProps = withIronSession(
     if (user) {
       return {
         redirect: {
-          destination: url.home,
+          destination: url.chat,
           permanent: false
         }
       }
@@ -71,6 +71,7 @@ const formErrors = {
 }
 
 export default function Login() {
+  const router = useRouter()
   const [errorState, setErrorState] = useState(formErrors)
 
   const doLogin = async () => {
@@ -101,7 +102,7 @@ export default function Login() {
       return
     }
 
-    console.log('SUCCEED')
+    router.push(url.chat)
   }
 
   const inputError = errorState.take()
