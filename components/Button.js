@@ -4,13 +4,13 @@ const buttonStyles = {
   primary: `
     inline-block border-2 border-green-500 bg-green-500 px-3
     py-2 text-white rounded-md font-semibold hover:bg-green-600
-    hover:border-green-600
+    hover:border-green-600 focus:outline-none
   `,
 
   secondary: `
     inline-block border-2 border-green-500 px-3 py-2 rounded-md
     text-green-500 font-semibold hover:border-green-600
-    hover:text-green-600
+    hover:text-green-600 focus:outline-none
   `
 }
 
