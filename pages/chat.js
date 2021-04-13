@@ -31,9 +31,10 @@ export default function Chat({ user }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       </Head>
 
-      <main>
-        <p>Welcome to Chatroom</p>
-      </main>
+      <div className="h-screen grid grid-cols-12 bg-blue-100">
+        <aside className="col-span-4 h-full bg-green-100"></aside>
+        <main className="col-span-8 h-full bg-red-100"></main>
+      </div>
     </Container>
   )
 }
