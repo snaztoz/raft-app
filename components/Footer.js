@@ -1,4 +1,4 @@
-export default function Footer() {
+export const Footer = () => {
   return (
     <footer className="p-2">
       <div className="p-2 border-t border-gray-200 text-center">

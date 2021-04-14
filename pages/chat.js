@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import { withIronSession } from 'next-iron-session'
 
-import Container from 'components/Container'
 import session from 'values/session'
 import url from 'values/urls'
+import { Container } from 'components/Container'
 import { ProfileHeader } from 'components/chat/ProfileHeader'
 import { Sidebar } from 'components/chat/Sidebar'
 import { TypingArea } from 'components/chat/TypingArea'

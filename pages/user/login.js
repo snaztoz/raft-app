@@ -3,14 +3,14 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { withIronSession } from 'next-iron-session'
 
-import Container from 'components/Container'
-import Navbar from 'components/Navbar'
-import Footer from 'components/Footer'
+import forms from 'values/forms'
 import session from 'values/session'
 import url from 'values/urls'
 import { BreakSpace } from 'components/Space'
+import { Container } from 'components/Container'
+import { Footer } from 'components/Footer'
+import { Navbar } from 'components/Navbar'
 import { PasswordInput, SubmitButton, TextInput } from 'components/Forms'
-import { forms } from 'values/forms'
 
 export const getServerSideProps = withIronSession(
   async function ({ req }) {

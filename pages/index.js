@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import Image from 'next/image';
 
-import Container from 'components/Container'
-import Navbar from 'components/Navbar'
-import Footer from 'components/Footer'
 import url from 'values/urls'
+import { Container } from 'components/Container'
+import { Footer } from 'components/Footer'
 import { LinkButton } from 'components/Button'
+import { Navbar } from 'components/Navbar'
 
 export default function Home() {
   return (

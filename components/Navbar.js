@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import url from 'values/urls'
 
-export default function Navbar(props) {
+export const Navbar = props => {
   return (
     <nav className="p-2 grid grid-cols-10 lg:grid-cols-8 gap-2 bg-white border-b">
       <p className="col-span-3 lg:col-start-2 lg:col-span-2 flex
