@@ -16,6 +16,7 @@
 /build
 
 # misc
+/internal/firebase-admin-config.json
 .DS_Store
 *.pem
 
