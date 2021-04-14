@@ -2,7 +2,7 @@ import { ProfileHeader } from 'components/chat/ProfileHeader'
 
 export const Sidebar = () => {
   return (
-    <aside className="relative col-span-4 h-full">
+    <aside className="relative col-span-4 h-full shadow-xl">
       <ProfileHeader bgColor="bg-green-300" textColor="text-white" name="Foo"
           image="/me-square.jpg" otherActions="act" />
 
