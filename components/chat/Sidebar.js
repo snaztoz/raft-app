@@ -8,7 +8,7 @@ export const Sidebar = () => {
   const router = useRouter()
 
   const doLogout = () => {
-    fetch('/api/user/logout', { method: 'POST' })
+    fetch(url.apiUserLogout, { method: 'POST' })
       .then(() => router.push(url.userLogin))
       .catch(err => console.log(err))
   }

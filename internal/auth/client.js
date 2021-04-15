@@ -2,6 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 
 import firebaseClientConfig from 'values/firebase'
+import url from 'values/urls'
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseClientConfig)
@@ -14,7 +15,7 @@ const clientAuth = {
       .signInWithEmailAndPassword(identifier, password)
       .then(({ user }) => {
         return user.getIdToken().then(idToken => {
-          return fetch('/api/user/login', {
+          return fetch(url.apiUserLogin, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
