@@ -1,10 +1,10 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
-import { firebaseConfig } from 'values/firebase'
+import firebaseClientConfig from 'values/firebase'
 
 if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig)
+  firebase.initializeApp(firebaseClientConfig)
 }
 
 const clientAuth = {

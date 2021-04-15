@@ -5,8 +5,6 @@ if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.applicationDefault(),
   })
-} else {
-  admin.app()
 }
 
 const serverAuth = {
