@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { withIronSession } from 'next-iron-session'
 
+import clientAuth from 'internal/auth/client'
 import forms from 'values/forms'
 import session from 'values/session'
 import url from 'values/urls'
@@ -81,28 +82,19 @@ export default function Login() {
     const identifier = document.querySelector(`input[name="${forms.login.identifier}"]`).value
     const password = document.querySelector(`input[name="${forms.login.password}"]`).value
 
-    const res = await fetch('/api/user/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({ identifier, password })
-    })
-
-    if (!res.ok) {
-      const { err } = await res.json()
-
-      setErrorState(prevErrorState => ({
-        ...prevErrorState,
-        el: errorCodes[err].el,
-        msg: errorCodes[err].msg,
-      }))
-
-      return
-    }
-
-    router.push(url.chat)
+    await clientAuth.login(
+      identifier,
+      password,
+      () => router.push(url.chat),
+      err => {
+        const code = err.code
+        setErrorState(prevErrorState => ({
+          ...prevErrorState,
+          el: errorCodes[code].el,
+          msg: errorCodes[code].msg
+        }))
+      }
+    )
   }
 
   const inputError = errorState.take()
