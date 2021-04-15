@@ -1,10 +1,21 @@
+import { Dropdown } from 'components/Dropdown'
 import { ProfileHeader } from 'components/chat/ProfileHeader'
 
 export const Sidebar = () => {
+  // untuk saat ini hanya menampilkan button untuk logout
+  const ddItems = [
+    <button className="w-full text-left px-3 py-2 hover:bg-gray-100 focus:bg-gray-100">
+      Logout
+    </button>
+  ]
+  const userProfileDropdown =
+    <Dropdown toggler={<span className="text-2xl font-extrabold">{`\u22EE`}</span>}
+        align="right" items={ddItems}/>
+
   return (
     <aside className="relative col-span-4 h-full shadow-xl">
       <ProfileHeader bgColor="bg-green-300" textColor="text-white" name="Foo"
-          image="/me-square.jpg" otherActions="act" />
+          image="/me-square.jpg" otherActions={userProfileDropdown} />
 
       <AddNewChatroomButton />
     </aside>
