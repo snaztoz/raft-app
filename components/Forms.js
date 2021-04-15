@@ -50,8 +50,7 @@ export const SubmitButton = props => {
         onClick={async e => {
           e.preventDefault()
           setClicked(true)
-          await props.handleClick()
-          setClicked(false)
+          await props.handleClick().catch(() => setClicked(false))
         }}>
       {value}
       {clicked &&

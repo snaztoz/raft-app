@@ -25,8 +25,7 @@ const clientAuth = {
         })
       })
       .then(() => firebase.auth().signOut())
-      .then(res => onLoginSuccess(res))
-      .catch(err => onLoginFailed(err))
+      .catch(err => { throw err })
   }
 }
 

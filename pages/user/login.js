@@ -82,19 +82,18 @@ export default function Login() {
     const identifier = document.querySelector(`input[name="${forms.login.identifier}"]`).value
     const password = document.querySelector(`input[name="${forms.login.password}"]`).value
 
-    await clientAuth.login(
-      identifier,
-      password,
-      () => router.push(url.chat),
-      err => {
+    return clientAuth
+      .login(identifier, password ?? '')
+      .then(() => router.push(url.chat))
+      .catch(err => {
         const code = err.code
         setErrorState(prevErrorState => ({
           ...prevErrorState,
           el: errorCodes[code].el,
           msg: errorCodes[code].msg
         }))
-      }
-    )
+        throw err
+      })
   }
 
   const inputError = errorState.take()
