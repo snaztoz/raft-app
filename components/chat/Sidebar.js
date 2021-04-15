@@ -1,10 +1,22 @@
+import { useRouter } from 'next/router'
+
+import url from 'values/urls'
 import { Dropdown } from 'components/Dropdown'
 import { ProfileHeader } from 'components/chat/ProfileHeader'
 
 export const Sidebar = () => {
+  const router = useRouter()
+
+  const doLogout = () => {
+    fetch('/api/user/logout', { method: 'POST' })
+      .then(() => router.push(url.userLogin))
+      .catch(err => console.log(err))
+  }
+
   // untuk saat ini hanya menampilkan button untuk logout
   const ddItems = [
-    <button className="w-full text-left px-3 py-2 hover:bg-gray-100 focus:bg-gray-100">
+    <button className="w-full text-left px-3 py-2 hover:bg-gray-100 focus:bg-gray-100"
+        onClick={doLogout}>
       Logout
     </button>
   ]
