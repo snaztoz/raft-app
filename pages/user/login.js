@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
+import firebase from 'firebase/app'
 import { useRouter } from 'next/router'
 import { withIronSession } from 'next-iron-session'
+import 'firebase/auth'
 
-import clientAuth from 'internal/auth/client'
+import firebaseClientConfig from 'values/firebase'
 import forms from 'values/forms'
 import session from 'values/session'
 import url from 'values/urls'
@@ -71,19 +73,67 @@ const formErrors = {
   }
 }
 
+/// Implementasi untuk mekanisme login terdiri atas beberapa tahapan,
+/// yakni sebagai berikut:
+///
+///  1. User melakukan login JWT dengan menggunakan layanan firebase
+///     secara langsung (tanpa melalui server Next.js)
+///  2. Setelah login berhasil dan token JWT sudah didapatkan, kemudian
+///     token tersebut dikirimkan ke server Next.js (ada di path
+///     /api/user/login) untuk ditukarkan dengan session cookie.
+///  3. Jika berhasil, maka user akan diredirect ke page lain dengan
+///     membawa cookie dari session milik-nya.
+///
+/// note:
+///  1. Setelah user mendapatkan session cookie, ia kemudian akan langsung
+///     melakukan logout dari login JWT-nya.
+///
+/// TODO:
+///  1. Belum diimplementasikan CSRF protection ketika menukarkan token
+///     JWT dengan session cookie.
+///
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseClientConfig)
+}
+
+const login = async (identifier, password) => {
+  return firebase
+    .auth()
+    .signInWithEmailAndPassword(identifier, password)
+    // lakukan pertukaran token dengan session cookie
+    .then(({ user }) =>
+      user
+        .getIdToken()
+        .then(token => exchangeJwt(token))
+    )
+    .then(() => firebase.auth().signOut())
+    .catch(err => { throw err })
+}
+
+const exchangeJwt = async idToken => {
+  return fetch(url.apiUserLogin, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({ idToken })
+  })
+}
+
 export default function Login() {
   const router = useRouter()
   const [errorState, setErrorState] = useState(formErrors)
 
-  const doLogin = async () => {
+  const attemptLogin = async () => {
     // reset error state ketika tombol login ditekan
     setErrorState(formErrors)
 
     const identifier = document.querySelector(`input[name="${forms.login.identifier}"]`).value
     const password = document.querySelector(`input[name="${forms.login.password}"]`).value
 
-    return clientAuth
-      .login(identifier, password ?? '')
+    return login(identifier, password)
       .then(() => router.push(url.chat))
       .catch(err => {
         const code = err.code
@@ -121,7 +171,7 @@ export default function Login() {
                 isErrorExist={inputError.el == 'password'} errorMsg={inputError.msg} />
             <BreakSpace size="5" />
 
-            <SubmitButton value="Login" handleClick={doLogin} />
+            <SubmitButton value="Login" handleClick={attemptLogin} />
           </form>
 
           <BreakSpace size="5" />
